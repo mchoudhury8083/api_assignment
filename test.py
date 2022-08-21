@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 mydb = conn.connect(host = "127.0.0.1", user = "root", password = "We******e123")
 cursor = mydb.cursor()
-client = pymongo.MongoClient("mongodb+srv://jaimaa12:jaimaa12@rajesh.6eakgsh.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://*******:*******@rajesh.6eakgsh.mongodb.net/?retryWrites=true&w=majority")
 mongodb = client['dress']
 
 # 1 . Write a program to insert a record in mongodb table via api
