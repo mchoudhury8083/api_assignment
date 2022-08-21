@@ -2,7 +2,7 @@ from flask import Flask , request, jsonify
 import mysql.connector as conn
 app = Flask(__name__)
 
-mydb = conn.connect(host = "127.0.0.1", user = "root", password = "Welcome123")
+mydb = conn.connect(host = "127.0.0.1", user = "root", password = "We******e123")
 cursor = mydb.cursor()
 
 # 1 . Write a program to insert a record in sql table via api
