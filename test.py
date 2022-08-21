@@ -5,7 +5,7 @@ from bson import json_util, ObjectId
 import json
 app = Flask(__name__)
 
-mydb = conn.connect(host = "127.0.0.1", user = "root", password = "Welcome123")
+mydb = conn.connect(host = "127.0.0.1", user = "root", password = "We******e123")
 cursor = mydb.cursor()
 client = pymongo.MongoClient("mongodb+srv://jaimaa12:jaimaa12@rajesh.6eakgsh.mongodb.net/?retryWrites=true&w=majority")
 mongodb = client['dress']
