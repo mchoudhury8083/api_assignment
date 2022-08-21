@@ -1,9 +1,82 @@
 from flask import Flask , request, jsonify
 import mysql.connector as conn
+import pymongo
+from bson import json_util, ObjectId
+import json
 app = Flask(__name__)
 
 mydb = conn.connect(host = "127.0.0.1", user = "root", password = "Welcome123")
 cursor = mydb.cursor()
+client = pymongo.MongoClient("mongodb+srv://jaimaa12:jaimaa12@rajesh.6eakgsh.mongodb.net/?retryWrites=true&w=majority")
+mongodb = client['dress']
+
+# 1 . Write a program to insert a record in mongodb table via api
+@app.route('/load_dress_mongodb', methods=['GET','POST'])
+def load_dress_data_mangodb():
+    print("START loading data ")
+    try:
+        json_data = request.get_json()
+        print(json_data)
+        dress_table = mongodb['dress_set']
+        dress_table.insert_one(json_data)
+        return ("Succcessfully Data Loaded")
+    except Exception as e:
+        print(e)
+        return ("System is under maintanance")
+    return ("Please check your data and load again")
+
+# 4 . Write a program to fetch a record via api in mongodb
+@app.route('/fetch_dress_mongodb', methods=['GET','POST'])
+def fetch_dress_data_mangodb():
+    print("START loading data ")
+    try:
+        Dress_ID = request.args.get('Dress_ID', None)
+        print(Dress_ID)
+        dress_table = mongodb['dress_set']
+        d = {
+            "Dress_ID": Dress_ID
+        }
+        page_sanitized = json.loads(json_util.dumps(dress_table.find_one(d)))
+
+        return jsonify(page_sanitized)
+    except Exception as e:
+        print(e)
+        return ("System is under maintanance")
+    return ("Please check your data and load again")
+
+# 2.  Write a program to update a record via api with mongodb
+@app.route('/update_dress_mongodb', methods=['GET','POST'])
+def update_dress_data_mangodb():
+    print("START loading data ")
+    try:
+        json_data = request.get_json()
+        print(json_data)
+        dress_table = mongodb['dress_set']
+        Dress_ID = request.json['Dress_ID']
+        dress_table.replace_one({'Dress_ID': Dress_ID}, json_data)
+        return ("Succcessfully Data Loaded")
+    except Exception as e:
+        print(e)
+        return ("System is under maintanance")
+    return ("Please check your data and load again")
+
+# 3.Write a program to delete a record via api in mongodb
+@app.route('/delete_dress_mongodb', methods=['GET','POST'])
+def delete_dress_data_mangodb():
+    print("START Deleting data ")
+    try:
+        json_data = request.get_json()
+        print(json_data)
+        dress_table = mongodb['dress_set']
+        Dress_ID = request.json['Dress_ID']
+        dress_table.delete_one({'Dress_ID': Dress_ID})
+        return ("Succcessfully Data Loaded")
+    except Exception as e:
+        print(e)
+        return ("System is under maintanance")
+    return ("Please check your data and load again")
+
+
 
 # 1 . Write a program to insert a record in sql table via api
 @app.route('/load_dress', methods=['GET','POST'])
@@ -88,6 +161,8 @@ def retrieve_dress_data():
         print(e)
         return ("System is under maintanance")
     return ("Please check your data and load again")
+
+
 
 
 
